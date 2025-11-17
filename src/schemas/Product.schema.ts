@@ -1,52 +1,50 @@
-//cosas que va a tener cada producto
-import {Schema} from '@nestjs/mongoose'
-import { Prop, SchemaFactory} from '@nestjs/mongoose'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema({
     timestamps: true
 })
-export class Product{
-
+export class Product extends Document {
     @Prop({
-        //para señalar que es unico y que es requerido
         unique: true,
         required: true,
+        trim: true
     })
-    nombre: string
-
-    @Prop({
-        //para señalar que es unico y que es requerido
-        unique: true,
-    })
-    id: string
+    nombre: string;
 
     @Prop({
         required: true,
-        unique: false
+        min: 0,
+        max: 5
     })
-    calificacion: number
-    @Prop({
-        required: true,
-        unique: false
-    })
-    comentarios: string 
-
-     @Prop({
-        required: true,
-     })
-    ventas: number 
+    calificacion: number;
 
     @Prop({
         required: true,
     })
-    precio: number
+    comentarios: string;
 
     @Prop({
         required: true,
+        default: 0
     })
-    stock: number
+    ventas: number;
 
+    @Prop({
+        required: true,
+        min: 0
+    })
+    precio: number;
 
+    @Prop({
+        required: true,
+        min: 0
+    })
+    stock: number;
+
+    // ✅ NUEVO CAMPO - categoría
+    @Prop({ type: Types.ObjectId, ref: 'Category' })
+    category: Types.ObjectId;
 }
 
-export const ProductSchema= SchemaFactory.createForClass(Product);
+export const ProductSchema = SchemaFactory.createForClass(Product);

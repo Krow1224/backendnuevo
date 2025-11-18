@@ -8,7 +8,7 @@ async function bootstrap() {
     { origin: ['http://localhost:4000', 'http://localhost:3000'] }
   ); // Configuración de CORS para conectar el back y front, es decir los puertos
 
-  await app.listen(process.env.PORT ?? 4000);
+  await app.listen(process.env.PORT ?? 3000);
 }
 
 bootstrap();

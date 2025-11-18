@@ -42,7 +42,6 @@ export class Product extends Document {
     })
     stock: number;
 
-    // ✅ NUEVO CAMPO - categoría
     @Prop({ type: Types.ObjectId, ref: 'Category' })
     category: Types.ObjectId;
 }

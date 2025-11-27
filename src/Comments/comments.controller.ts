@@ -1,14 +1,24 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { CommentsService } from './comments.service';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  @Post()
-  async create(@Body() createCommentDto: any) {
-    return this.commentsService.create(createCommentDto);
-  }
+  @Post(":productId")
+  async create(
+    @Param('productId') productId: string,
+    @Body() CreateCommentDto: CreateCommentDto
+    
+    ) {
+
+      return this.commentsService.create(
+        productId,
+        CreateCommentDto.text,
+      CreateCommentDto.rating,
+    CreateCommentDto.userId);
+   }
 
   @Get('product/:productId')
   async findByProduct(@Param('productId') productId: string) {

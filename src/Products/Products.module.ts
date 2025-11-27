@@ -7,6 +7,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Product } from 'src/schemas/Product.schema';
 import { ProductSchema } from 'src/schemas/Product.schema';
 import { Category, CategorySchema } from '../schemas/category.schema';
+import { Comment,CommentSchema } from 'src/schemas/Product.schema';
+import { CommentsModule } from 'src/Comments/comments.module';
+import { forwardRef } from '@nestjs/common';
 
 
 //un modulo puede incluir varios controladores y en este caso incluye el products controller
@@ -15,12 +18,14 @@ import { Category, CategorySchema } from '../schemas/category.schema';
     imports: [
     MongooseModule.forFeature([
       { name: Product.name, schema: ProductSchema },
-      { name: Category.name, schema: CategorySchema }
-    ])
+      { name: Category.name, schema: CategorySchema },
+      
+    ]),
+     forwardRef(() => CommentsModule)
     ],
     controllers: [ProductsController],
     providers:[ProductsService],
-    exports: [MongooseModule],
+    exports: [ProductsService],
     
 })
 export class ProductsModule{}

@@ -15,7 +15,7 @@ export class Comment extends Document {
   user: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'Product', required: true })
-  product: Types.ObjectId;
+  productId: Types.ObjectId;
 
   @Prop({ type: Boolean, default: true })
   isActive: boolean;

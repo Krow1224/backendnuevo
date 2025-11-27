@@ -1,8 +1,10 @@
-import {Controller,Get,Post,Delete,Body,Header, Param, Put} from '@nestjs/common'
+import {Controller,Get,Post,Delete,Body,Header, Param, Put, UsePipes, ValidationPipe} from '@nestjs/common'
 import { ProductsService } from './Products.service';
 import type { Response } from 'express';
 import { join } from 'path';
 import { Product } from 'src/schemas//Product.schema';
+import { CreateCommentDto } from 'src/Comments/dto/create-comment.dto';
+import { ProductoDocument } from 'src/schemas//Product.schema';
 
 
 @Controller({})
@@ -20,6 +22,15 @@ export class ProductsController  {
       console.log("obteniendo todos los productos")
       const r= await this.ProductsService.obtenertodomong();
       return r;
+    }
+
+    @Post(':id/comentarios')
+    @UsePipes(new ValidationPipe({ whitelist: true })) // Asegura la validación del DTO
+    async addComentario(
+        @Param('id') id: string,
+        @Body() crearComentarioDto: CreateCommentDto,
+    ): Promise<ProductoDocument> {
+        return this.ProductsService.agregarComentario(id, crearComentarioDto);
     }
 
     @Get('/products/id/:id')
